@@ -79,8 +79,7 @@
     <StartupObject>GalsPassHolder.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>GalanthasKeyFile.pfx</AssemblyOriginatorKeyFile>
