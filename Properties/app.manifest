@@ -1,4 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!--/*Created by Layla aka Galantha
+* MIT license
+* no warranty
+*
+* Copyright 2020-12-27
+*
+* email: gal_0xff@outlook.com
+*/-->
+
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
 	<assemblyIdentity version="1.0.0.0" name="MyApplication.app" />
 	<trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">

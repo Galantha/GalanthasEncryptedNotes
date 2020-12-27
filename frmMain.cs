@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*Created by Layla aka Galantha
+ * MIT license
+ * no warranty
+ * 
+ * Copyright 2020-12-27
+ * 
+ * email: gal_0xff@outlook.com
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
