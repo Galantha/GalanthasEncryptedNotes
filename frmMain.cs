@@ -74,14 +74,16 @@ namespace GalsPassHolder
                 return;
 
             resizingThreadExit = false;
+            var endTime = DateTime.Now.AddSeconds(30);
             var t = new System.Threading.Thread(() =>
             {
                 System.Threading.Thread.Sleep(20);
-                while (!resizingThreadExit && !formClosingFlag && allowResizeUpdate)
+                while (!resizingThreadExit && !formClosingFlag && allowResizeUpdate && DateTime.Now < endTime)
                 {
                     Invoke(new Action(() => FrmMain_UpdateAfterResize())); // update after resize is expensive, so the goal here is to ignore most of the resize events
                     System.Threading.Thread.Sleep(20);
                 }
+                resizingThreadExit = true;
             });
             t.Start();
         }
