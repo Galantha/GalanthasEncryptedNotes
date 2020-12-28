@@ -29,7 +29,7 @@ namespace GalsPassHolder
         private static readonly IFormatProvider inv = GalFormFunctions.inv;
 
         private bool formClosingFlag = false;
-        private bool closeWithoutSaving = false;
+        public bool closeWithoutSaving = false; //gets set by exception handler to prevent writing bad file
         private bool FrmMain_Shown_firstRun = true;
         private bool allowResizeUpdate = false;
         private bool resizingThreadExit = true;
@@ -63,9 +63,20 @@ namespace GalsPassHolder
             }
             catch
             {
-                //permissions error?
                 folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
+
+            string version;
+            try
+            {
+                version = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+            }
+            catch (System.Deployment.Application.InvalidDeploymentException)
+            {
+                version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
+
+            lblVersion.Text = "Version: " + version + " " + "Copyright " + DateTime.Now.Year.ToString() + " MIT";
         }
 
         private void FrmMain_ResizeBegin(object sender, EventArgs e)
@@ -131,12 +142,15 @@ namespace GalsPassHolder
 
             var nf = new Font("Microsoft Sans Serif", newFontSize);
             GalFormFunctions.RecursiveSetProperty<Font>(this, "Font", nf, new List<Type>() { btnKeyAdd.GetType(), cmbVersionSelect.GetType(), menuStripMain.GetType(), menuItemOptionsToolStrip.GetType(), menuItemNew.GetType() });
+            
             var nf2 = new Font(nf.Name, Convert.ToSingle(newFontSize * 1.1));
-            GalFormFunctions.RecursiveSetProperty<Font>(this, "Font", nf2, new List<Type>() { lblClipBoard.GetType(), txtNoteData.GetType() });
+            GalFormFunctions.RecursiveSetProperty<Font>(this, "Font", nf2, new List<Type>() { lblClipBoard.GetType(), txtNoteData.GetType() }, excludeControls: new List<Control>() { lblVersion });
 
-            FrmMain_RecursiveFontSizeSetter(this, newFontSize);
+            lblVersion.Font = nf;
+
+            FrmMain_RecursiveDataGridFontSetter(this, newFontSize);
         }
-        private void FrmMain_RecursiveFontSizeSetter(Control root, float fontSize)
+        private void FrmMain_RecursiveDataGridFontSetter(Control root, float fontSize)
         {
             String type = root.GetType().Name;
             var nf = new Font("Microsoft Sans Serif", fontSize);
@@ -167,7 +181,7 @@ namespace GalsPassHolder
             }
 
             foreach (Control ctr in root.Controls)
-                FrmMain_RecursiveFontSizeSetter(ctr, fontSize);
+                FrmMain_RecursiveDataGridFontSetter(ctr, fontSize);
         }
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -526,8 +540,18 @@ namespace GalsPassHolder
                         var dataRows = dsGalData.dtSettings.Select("name='verify'");
                         if (!(dataRows.Length > 0))
                         {
-                            MessageBox.Show(this, fileName + " missing verification information.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                            fileName = "";
+                            if (MessageBox.Show(this, fileName + " missing verification information.  Attempt to open anyway?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                            { 
+                                File_BindDataGridViewNotes();
+                                closeWithoutSaving = true;
+                            }
+                            else
+                            {
+                                fileName = "";
+                                dsGalData = null;
+                            }
+                                
+                                
                         }
                         else
                         {

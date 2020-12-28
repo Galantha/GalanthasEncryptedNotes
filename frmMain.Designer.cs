@@ -70,6 +70,8 @@
             this.btnNoteAdd = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tblLayoutTopMenu = new System.Windows.Forms.TableLayoutPanel();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tblLyoMain.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -78,17 +80,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.tblLayoutTopMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
             // 
             this.menuStripMain.BackColor = System.Drawing.Color.LightGray;
+            this.menuStripMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.menuItemOptionsToolStrip});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(584, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(292, 24);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -176,8 +180,8 @@
             this.tblLyoMain.Controls.Add(this.tableLayoutPanel2, 1, 1);
             this.tblLyoMain.Controls.Add(this.tblLyoNoteData, 2, 0);
             this.tblLyoMain.Controls.Add(this.dataGridViewKeys, 1, 0);
-            this.tblLyoMain.Controls.Add(this.dataGridViewNotes, 0, 0);
             this.tblLyoMain.Controls.Add(this.tableLayoutPanel1, 0, 1);
+            this.tblLyoMain.Controls.Add(this.dataGridViewNotes, 0, 0);
             this.tblLyoMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblLyoMain.Location = new System.Drawing.Point(0, 24);
             this.tblLyoMain.Name = "tblLyoMain";
@@ -616,6 +620,36 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(0, 17);
             // 
+            // tblLayoutTopMenu
+            // 
+            this.tblLayoutTopMenu.AutoSize = true;
+            this.tblLayoutTopMenu.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tblLayoutTopMenu.ColumnCount = 2;
+            this.tblLayoutTopMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblLayoutTopMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblLayoutTopMenu.Controls.Add(this.menuStripMain, 0, 0);
+            this.tblLayoutTopMenu.Controls.Add(this.lblVersion, 1, 0);
+            this.tblLayoutTopMenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tblLayoutTopMenu.Location = new System.Drawing.Point(0, 0);
+            this.tblLayoutTopMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.tblLayoutTopMenu.Name = "tblLayoutTopMenu";
+            this.tblLayoutTopMenu.RowCount = 1;
+            this.tblLayoutTopMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblLayoutTopMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblLayoutTopMenu.Size = new System.Drawing.Size(584, 24);
+            this.tblLayoutTopMenu.TabIndex = 101;
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblVersion.Location = new System.Drawing.Point(295, 0);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(286, 24);
+            this.lblVersion.TabIndex = 1;
+            this.lblVersion.Text = "lblVersion";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FrmMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -623,7 +657,7 @@
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.tblLyoMain);
-            this.Controls.Add(this.menuStripMain);
+            this.Controls.Add(this.tblLayoutTopMenu);
             this.Controls.Add(this.statusStrip);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -652,6 +686,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.tblLayoutTopMenu.ResumeLayout(false);
+            this.tblLayoutTopMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -696,6 +732,8 @@
         private System.Windows.Forms.Button btnNoteEdit;
         private System.Windows.Forms.Button btnNoteAdd;
         public System.Windows.Forms.ComboBox cmbVersionSelect;
+        private System.Windows.Forms.TableLayoutPanel tblLayoutTopMenu;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 

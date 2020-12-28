@@ -159,16 +159,16 @@ namespace GalsPassHolder
     static class GalFormFunctions
     {
         public static readonly IFormatProvider inv = System.Globalization.CultureInfo.InvariantCulture;
-        public static void RecursiveSetProperty<T>(Control ctr, String property, T propertyValue, System.Collections.Generic.List<Type> includeOnlyTypes = null, System.Collections.Generic.List<Type> excludeTypes = null)
+        public static void RecursiveSetProperty<T>(Control ctr, String property, T propertyValue, System.Collections.Generic.List<Type> includeOnlyTypes = null, System.Collections.Generic.List<Type> excludeTypes = null, System.Collections.Generic.List<Control> excludeControls = null)
         {
             System.Windows.Forms.Control.ControlCollection controls = null;
             controls = ctr.Controls;
 
             foreach (Control childControl in controls)
-                RecursiveSetProperty<T>(childControl, property, propertyValue, includeOnlyTypes, excludeTypes);
+                RecursiveSetProperty<T>(childControl, property, propertyValue, includeOnlyTypes, excludeTypes, excludeControls);
 
             Type type = ctr.GetType();
-            if ((includeOnlyTypes == null || includeOnlyTypes.Contains(type)) && (excludeTypes == null || !excludeTypes.Contains(type)))
+            if ((includeOnlyTypes == null || includeOnlyTypes.Contains(type)) && (excludeTypes == null || !excludeTypes.Contains(type)) && (excludeControls == null  || !excludeControls.Contains(ctr)))
                 SetPropertyIfExists<T>(ctr, property, propertyValue);
         }
         public static void SetPropertyIfExists<T>(Control ctr, String property, T propertyValue)

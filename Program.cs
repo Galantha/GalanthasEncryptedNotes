@@ -14,6 +14,7 @@ namespace GalsPassHolder
 {
     static class Program
     {
+        static FrmMain frmGalMain;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -42,13 +43,13 @@ namespace GalsPassHolder
                 DealWithException(ex);
             }
 
-            FrmMain frm = null;
+            frmGalMain = null;
             try
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                frm = new FrmMain();
-                Application.Run(frm);
+                frmGalMain = new FrmMain();
+                Application.Run(frmGalMain);
             }
             catch (Exception ex)
             {
@@ -56,8 +57,8 @@ namespace GalsPassHolder
             }
             finally
             {
-                if (frm != null)
-                    frm.Dispose(); //why does the code analyizer recommend this?
+                if (frmGalMain != null)
+                    frmGalMain.Dispose(); //why does the code analyizer recommend this?
             }
         }
 
@@ -74,12 +75,18 @@ namespace GalsPassHolder
 
         static void DealWithException(Exception ex)
         {
-            
+            if (frmGalMain != null)
+                frmGalMain.closeWithoutSaving = true; //prevent automatic saving of bad file
             try
             {
                 var nl = Environment.NewLine;
                 var text = "==================================" + nl + DateTime.Now.ToString(GalFormFunctions.inv) + nl + nl + ConvertExceptionToTextRecursive(ex) + nl + nl;
-                var fileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\galErrors.txt";
+                String fileName;
+                if (!string.IsNullOrWhiteSpace(FrmMain.folder))
+                    fileName = FrmMain.folder;
+                else
+                    fileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                fileName += "\\galErrors.txt";
                 MessageBox.Show(text + nl + nl + "Attempting to save to: " + fileName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.IO.File.AppendAllText(fileName, text);
             }
