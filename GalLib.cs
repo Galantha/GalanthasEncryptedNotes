@@ -15,6 +15,10 @@ namespace GalsPassHolder
     public static class GalLib
     {
         public static readonly IFormatProvider inv = System.Globalization.CultureInfo.InvariantCulture;
+        private const string versionPrefix = "²";
+        private const string verify = "Verify!";
+        private const string dsVersionPrefix = "³";
+
 
         private static readonly char[] charArray = InitCharArray(); //length is 89 //changing this will break backwards compatiability
         private static char[] InitCharArray()
@@ -105,6 +109,7 @@ namespace GalsPassHolder
 
         public static string EncryptString(string salt, string key, string plainText, int extraHashIterations = 10000)
         {
+            const string version = "00001";
             byte[] result;
             {
                 if (string.IsNullOrWhiteSpace(salt))
@@ -115,7 +120,7 @@ namespace GalsPassHolder
                 byte[] ky = GetHash256(salt, key, extraHashIterations);
                 byte[] iv = TruncateByteArray(GetHash256(key, salt, (extraHashIterations + 1) / 2), 32);
 
-                string textToWrite = GetRandomSalt(10) + plainText; //randomizing the input just a touch
+                string textToWrite = GetRandomSalt(10) + verify + plainText; //randomizing the input just a touch //verify lets us verify decryption was correct
 
                 using (var rij = new System.Security.Cryptography.RijndaelManaged())
                 {
@@ -149,11 +154,14 @@ namespace GalsPassHolder
                 WipeByteArray(iv);
             } //out of scope and into garbage
             GC.Collect();
-            return BytesToStrStorage(result);
+
+            string encrypted = versionPrefix + version + BytesToStrStorage(result);
+            return encrypted;
         }
 
         public static string DecryptString(string salt, string key, string encryptedText, int extraHashIterations = 10000)
         {
+            string version;
             string plainText = "";
             {
                 if (string.IsNullOrWhiteSpace(salt))
@@ -164,8 +172,24 @@ namespace GalsPassHolder
                 byte[] ky = GetHash256(salt, key, extraHashIterations);
                 byte[] iv = TruncateByteArray(GetHash256(key, salt, (extraHashIterations + 1) / 2), 32);
 
-                byte[] encryptedBytes = StrStorageToBytes(encryptedText);
 
+                byte[] encryptedBytes;
+                if (encryptedText.Substring(0, 1) != versionPrefix) //version prefix was my way of adding versioning to a function that did not have it orginally
+                    version = "00000";
+                else
+                    version = encryptedText.Substring(1, 5);
+
+                switch (version) //yea, so the first version of the function needed a verify step, so then I realized I needed versioning with a graceful way to transistion between versions.
+                {
+                    case "00000":
+                        encryptedBytes = StrStorageToBytes(encryptedText);
+                        break;
+                    case "00001":
+                        encryptedBytes = StrStorageToBytes(encryptedText.Substring(1 + 5)); //1 for the prefix and 5 for the version
+                        break;
+                    default:
+                        throw new Exception("Decrypt String unsupported version!");
+                }
 
                 using (var rij = new System.Security.Cryptography.RijndaelManaged())
                 {
@@ -198,11 +222,24 @@ namespace GalsPassHolder
                 WipeByteArray(iv);
             }//out of scope and into garbage
             GC.Collect();
-            return plainText.Substring(10); //remember the first 10 chars are just randomized for fun
+
+            switch (version)
+            {
+                case "00000":
+                    return plainText.Substring(10); //remember the first 10 chars are just randomized for fun
+                case "00001":
+                    if (plainText.Substring(10, verify.Length) != verify)
+                        throw new Exception("decryption verification failed!");
+                    else
+                        return plainText.Substring(10 + verify.Length);
+                default:
+                    throw new Exception("Decrypt String unsupported version!");
+            }
         }
 
         public static void EncryptDataSetToFile<T>(T ds, string file, string key, Boolean noAsync = true) where T : System.Data.DataSet
         {
+            const string version = "0000A";
             {
                 String strDataSet;
                 using (var ms = new System.IO.MemoryStream())
@@ -214,13 +251,13 @@ namespace GalsPassHolder
                     ms.Position = 0;
                     using (var sr = new System.IO.StreamReader(ms))
                     {
-                        strDataSet = sr.ReadToEnd();
+                        strDataSet = verify + sr.ReadToEnd();
                     }
                 }
 
-                string[] paramArray = { strDataSet, file, key };
+                string[] paramArray = { strDataSet, file, key, version };
 
-                if (noAsync)
+                if (noAsync || true)
                     EncryptDataSetToFileAsyncHelper(paramArray);
                 else
                 {
@@ -239,6 +276,7 @@ namespace GalsPassHolder
                 string strDataSet = paramArray[0];
                 string file = paramArray[1];
                 string key = paramArray[2];
+                string version = paramArray[3];
 
                 string salt = GetRandomSalt(filePadLength);
                 string dsEncrypted = EncryptString(salt, key, strDataSet, 20000); //this is mildly expensive, along with VerifyEncryptedFile below //threading this reduces UI lag
@@ -246,6 +284,8 @@ namespace GalsPassHolder
 
                 using (var sw = System.IO.File.CreateText(tmpFile))
                 {
+                    sw.Write(dsVersionPrefix);
+                    sw.Write(version);
                     sw.Write(salt);
                     sw.Write(dsEncrypted);
                     sw.Flush();
@@ -262,6 +302,11 @@ namespace GalsPassHolder
                     System.IO.File.Copy(tmpFile, file, true); //this is done because I do not want to delete a good previous file until I know I have a good current file
                     System.IO.File.Delete(tmpFile);
                 }
+
+                paramArray = null;
+                paramArrayObject = null;
+                strDataSet = "";
+                key = "";
             } //out of scope into the garbage
             GC.Collect();
         }
@@ -276,50 +321,92 @@ namespace GalsPassHolder
         private static bool VerifyEncryptedFile(string file, string key)
         {
             {
-                String data;
-                using (var fs = System.IO.File.OpenRead(file))
-                {
-                    using (var sr = new System.IO.StreamReader(fs))
-                    {
-                        data = sr.ReadToEnd();
-                    }
-                }
-
-                var salt = data.Substring(0, filePadLength);
-                var encryptedData = data.Substring(filePadLength);
+                Tuple<string, string> prep;
                 try
                 {
-                    DecryptString(salt, key, encryptedData, 20000);
+                    prep = getStringFromFileForDataSet(file, key);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    //oh shit
-                    throw new Exception("file verification failed!", ex);
-                    //should straight crash the program now.
+                    return false;
+                }
+                var version = prep.Item1;
+                var plainText = prep.Item2;
+
+                switch (version)
+                {
+                    case "00000":
+                        return true;
+                    case "0000A":
+                        if (plainText.Substring(0, verify.Length) != verify)
+                            return false;
+                        break;
+                    default:
+                        throw new Exception("VerifyEncryptedFile unsupported version!");
                 }
             }//out of scope and into garbage
             GC.Collect();
             return true;
         }
 
+        private static Tuple<string, string> getStringFromFileForDataSet(string file, string key)
+        {
+            String data;
+            using (var fs = System.IO.File.OpenRead(file))
+            {
+                using (var sr = new System.IO.StreamReader(fs))
+                {
+                    data = sr.ReadToEnd();
+                }
+            }
+
+            string version;
+            if (data.Substring(0, 1) == dsVersionPrefix)
+                version = data.Substring(1, 5);
+            else
+                version = "00000";
+
+            string salt;
+            string encryptedData;
+            switch (version)
+            {
+                case "00000":
+                    salt = data.Substring(0, filePadLength);
+                    encryptedData = data.Substring(filePadLength);
+                    break;
+                case "0000A":
+                    salt = data.Substring(1 + 5, filePadLength);
+                    encryptedData = data.Substring(filePadLength + 1 + 5);
+                    break;
+                default:
+                    throw new Exception("VerifyEncryptedFile unsupported version!");
+            }
+            return new Tuple<string, string>(version, DecryptString(salt, key, encryptedData, 20000));
+        }
+
         public static T DecryptDataSetFromFile<T>(string file, string key) where T : System.Data.DataSet, new()
         {
             T dataSet;
             {
-                String data;
-                using (var fs = System.IO.File.OpenRead(file))
+                Tuple<string, string> prep = getStringFromFileForDataSet(file, key);
+                string version = prep.Item1;
+                string decryptedData;
+                switch (version)
                 {
-                    using (var sr = new System.IO.StreamReader(fs))
-                    {
-                        data = sr.ReadToEnd();
-                    }
+                    case "00000":
+                        decryptedData = prep.Item2;
+                        break;
+                    case "0000A":
+                        if (prep.Item2.Substring(0, verify.Length) != verify)
+                            throw new Exception("File decryption verification failed!");
+                        else
+                            decryptedData = prep.Item2.Substring(verify.Length);
+                        break;
+                    default:
+                        throw new Exception("VerifyEncryptedFile unsupported version!");
                 }
 
-                var salt = data.Substring(0, filePadLength);
-                var encryptedData = data.Substring(filePadLength);
-                var decryptedData = DecryptString(salt, key, encryptedData, 20000);
                 dataSet = new T();
-
                 using (var ms = new System.IO.MemoryStream())
                 {
                     using (var sr = new System.IO.StreamWriter(ms))

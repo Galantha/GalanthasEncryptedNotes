@@ -102,6 +102,7 @@
             this.menuItemSaveExit,
             this.menuItemExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
@@ -110,7 +111,7 @@
             this.menuItemNew.Name = "menuItemNew";
             this.menuItemNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.menuItemNew.Size = new System.Drawing.Size(183, 22);
-            this.menuItemNew.Text = "New";
+            this.menuItemNew.Text = "&New";
             this.menuItemNew.Click += new System.EventHandler(this.Menu_NewToolStripMenuItem_Click);
             // 
             // menuItemOpen
@@ -118,7 +119,7 @@
             this.menuItemOpen.Name = "menuItemOpen";
             this.menuItemOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
             this.menuItemOpen.Size = new System.Drawing.Size(183, 22);
-            this.menuItemOpen.Text = "Open";
+            this.menuItemOpen.Text = "&Open";
             this.menuItemOpen.Click += new System.EventHandler(this.Menu_OpenToolStripMenuItem_Click);
             // 
             // menuItemSave
@@ -126,7 +127,7 @@
             this.menuItemSave.Name = "menuItemSave";
             this.menuItemSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.menuItemSave.Size = new System.Drawing.Size(183, 22);
-            this.menuItemSave.Text = "Save";
+            this.menuItemSave.Text = "&Save";
             this.menuItemSave.Click += new System.EventHandler(this.Menu_SaveToolStripMenuItem_Click);
             // 
             // menuItemSaveAs
@@ -141,7 +142,7 @@
             this.menuItemSaveExit.Name = "menuItemSaveExit";
             this.menuItemSaveExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.menuItemSaveExit.Size = new System.Drawing.Size(183, 22);
-            this.menuItemSaveExit.Text = "Save and Exit";
+            this.menuItemSaveExit.Text = "Save and &Exit";
             this.menuItemSaveExit.Click += new System.EventHandler(this.Menu_CloseToolStripMenuItem_Click);
             // 
             // menuItemExit
@@ -272,13 +273,13 @@
             this.tblLyoNoteData.RowCount = 8;
             this.tblLyoMain.SetRowSpan(this.tblLyoNoteData, 2);
             this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6F));
-            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
-            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
+            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6F));
+            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18F));
             this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6F));
+            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12F));
+            this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12F));
             this.tblLyoNoteData.Size = new System.Drawing.Size(289, 315);
             this.tblLyoNoteData.TabIndex = 100;
             this.tblLyoNoteData.Visible = false;
@@ -330,10 +331,10 @@
             // btnPasteTo
             // 
             this.btnPasteTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPasteTo.Location = new System.Drawing.Point(0, 218);
+            this.btnPasteTo.Location = new System.Drawing.Point(0, 235);
             this.btnPasteTo.Margin = new System.Windows.Forms.Padding(0);
             this.btnPasteTo.Name = "btnPasteTo";
-            this.btnPasteTo.Size = new System.Drawing.Size(57, 47);
+            this.btnPasteTo.Size = new System.Drawing.Size(57, 37);
             this.btnPasteTo.TabIndex = 4;
             this.btnPasteTo.Text = "&Paste To:";
             this.btnPasteTo.UseVisualStyleBackColor = true;
@@ -342,10 +343,10 @@
             // btnCopyFrom
             // 
             this.btnCopyFrom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCopyFrom.Location = new System.Drawing.Point(0, 265);
+            this.btnCopyFrom.Location = new System.Drawing.Point(0, 272);
             this.btnCopyFrom.Margin = new System.Windows.Forms.Padding(0);
             this.btnCopyFrom.Name = "btnCopyFrom";
-            this.btnCopyFrom.Size = new System.Drawing.Size(57, 50);
+            this.btnCopyFrom.Size = new System.Drawing.Size(57, 43);
             this.btnCopyFrom.TabIndex = 5;
             this.btnCopyFrom.TabStop = false;
             this.btnCopyFrom.Text = "Copy From:";
@@ -357,11 +358,11 @@
             this.lblClipBoard.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tblLyoNoteData.SetColumnSpan(this.lblClipBoard, 3);
             this.lblClipBoard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblClipBoard.Location = new System.Drawing.Point(59, 219);
+            this.lblClipBoard.Location = new System.Drawing.Point(59, 236);
             this.lblClipBoard.Margin = new System.Windows.Forms.Padding(2, 1, 2, 0);
             this.lblClipBoard.Name = "lblClipBoard";
             this.tblLyoNoteData.SetRowSpan(this.lblClipBoard, 2);
-            this.lblClipBoard.Size = new System.Drawing.Size(167, 96);
+            this.lblClipBoard.Size = new System.Drawing.Size(167, 79);
             this.lblClipBoard.TabIndex = 12;
             this.lblClipBoard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -370,9 +371,9 @@
             this.label2.AutoSize = true;
             this.tblLyoNoteData.SetColumnSpan(this.label2, 3);
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(60, 187);
+            this.label2.Location = new System.Drawing.Point(60, 217);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 31);
+            this.label2.Size = new System.Drawing.Size(165, 18);
             this.label2.TabIndex = 11;
             this.label2.Text = "System clip board";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -381,12 +382,13 @@
             // 
             this.tblLyoNoteData.SetColumnSpan(this.txtNoteData, 5);
             this.txtNoteData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtNoteData.Location = new System.Drawing.Point(1, 40);
+            this.txtNoteData.Location = new System.Drawing.Point(1, 36);
             this.txtNoteData.Margin = new System.Windows.Forms.Padding(1, 0, 1, 2);
             this.txtNoteData.Multiline = true;
             this.txtNoteData.Name = "txtNoteData";
             this.tblLyoNoteData.SetRowSpan(this.txtNoteData, 2);
-            this.txtNoteData.Size = new System.Drawing.Size(287, 114);
+            this.txtNoteData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtNoteData.Size = new System.Drawing.Size(287, 148);
             this.txtNoteData.TabIndex = 3;
             this.txtNoteData.TextChanged += new System.EventHandler(this.NotesData_txtNoteData_TextChanged);
             this.txtNoteData.Enter += new System.EventHandler(this.NoteData_txtNoteData_Enter);
@@ -399,7 +401,7 @@
             this.lblNoteData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblNoteData.Location = new System.Drawing.Point(3, 18);
             this.lblNoteData.Name = "lblNoteData";
-            this.lblNoteData.Size = new System.Drawing.Size(283, 22);
+            this.lblNoteData.Size = new System.Drawing.Size(283, 18);
             this.lblNoteData.TabIndex = 13;
             this.lblNoteData.Text = "Note : Item : Data";
             this.lblNoteData.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -408,7 +410,7 @@
             // 
             this.btnSaveNoteData.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSaveNoteData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveNoteData.Location = new System.Drawing.Point(0, 156);
+            this.btnSaveNoteData.Location = new System.Drawing.Point(0, 186);
             this.btnSaveNoteData.Margin = new System.Windows.Forms.Padding(0);
             this.btnSaveNoteData.MinimumSize = new System.Drawing.Size(35, 20);
             this.btnSaveNoteData.Name = "btnSaveNoteData";
@@ -422,7 +424,7 @@
             // 
             this.btnClearNoteData.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnClearNoteData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnClearNoteData.Location = new System.Drawing.Point(57, 156);
+            this.btnClearNoteData.Location = new System.Drawing.Point(57, 186);
             this.btnClearNoteData.Margin = new System.Windows.Forms.Padding(0);
             this.btnClearNoteData.MinimumSize = new System.Drawing.Size(35, 20);
             this.btnClearNoteData.Name = "btnClearNoteData";
@@ -436,11 +438,11 @@
             // btnClearClipboard
             // 
             this.btnClearClipboard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnClearClipboard.Location = new System.Drawing.Point(228, 218);
+            this.btnClearClipboard.Location = new System.Drawing.Point(228, 235);
             this.btnClearClipboard.Margin = new System.Windows.Forms.Padding(0);
             this.btnClearClipboard.Name = "btnClearClipboard";
             this.tblLyoNoteData.SetRowSpan(this.btnClearClipboard, 2);
-            this.btnClearClipboard.Size = new System.Drawing.Size(61, 97);
+            this.btnClearClipboard.Size = new System.Drawing.Size(61, 80);
             this.btnClearClipboard.TabIndex = 11;
             this.btnClearClipboard.TabStop = false;
             this.btnClearClipboard.Text = "Clear";
@@ -451,7 +453,7 @@
             // 
             this.tblLyoNoteData.SetColumnSpan(this.btnMakePassword, 2);
             this.btnMakePassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMakePassword.Location = new System.Drawing.Point(114, 156);
+            this.btnMakePassword.Location = new System.Drawing.Point(114, 186);
             this.btnMakePassword.Margin = new System.Windows.Forms.Padding(0);
             this.btnMakePassword.Name = "btnMakePassword";
             this.btnMakePassword.Size = new System.Drawing.Size(114, 31);
@@ -638,6 +640,7 @@
             this.Shown += new System.EventHandler(this.FrmMain_Shown);
             this.ResizeBegin += new System.EventHandler(this.FrmMain_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.FrmMain_ResizeEnd);
+            this.Resize += new System.EventHandler(this.FrmMain_Resize);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
             this.tblLyoMain.ResumeLayout(false);

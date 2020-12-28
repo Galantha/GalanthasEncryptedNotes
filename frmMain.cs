@@ -24,7 +24,7 @@ namespace GalsPassHolder
         private const float defaultHeight = 400f;
         private const float defaultFontSize = 8.25f;
         private const string notesFileExtension = "gendb"; //seems a somewhat unique extension
-        private const string notesFileExtensionFilter = "Gal Encrypted Note DataBase (*." + notesFileExtension + ")|*." + notesFileExtension;
+        private const string notesFileExtensionFilter = "Gal Encrypted Note DataBase (*." + notesFileExtension + ")|*." + notesFileExtension + "|All Files (*.*)|*.*";
         private const string notesFileDefault = "GalsEncryptedNotesDefaultDatabase." + notesFileExtension;
         private static readonly IFormatProvider inv = GalFormFunctions.inv;
 
@@ -32,7 +32,7 @@ namespace GalsPassHolder
         private bool closeWithoutSaving = false;
         private bool FrmMain_Shown_firstRun = true;
         private bool allowResizeUpdate = false;
-        private bool resizingThreadExit = false;
+        private bool resizingThreadExit = true;
 
         private string mainHashKey = "";
         private string fileName = "";
@@ -74,23 +74,27 @@ namespace GalsPassHolder
                 return;
 
             resizingThreadExit = false;
-            var t = new System.Threading.Thread(() => 
+            var t = new System.Threading.Thread(() =>
             {
                 System.Threading.Thread.Sleep(20);
-                while (!resizingThreadExit && !formClosingFlag && allowResizeUpdate) 
+                while (!resizingThreadExit && !formClosingFlag && allowResizeUpdate)
                 {
                     Invoke(new Action(() => FrmMain_UpdateAfterResize())); // update after resize is expensive, so the goal here is to ignore most of the resize events
                     System.Threading.Thread.Sleep(20);
                 }
             });
-            t.Start();  
+            t.Start();
         }
         private void FrmMain_ResizeEnd(object sender, EventArgs e)
         {
             resizingThreadExit = true;
             FrmMain_UpdateAfterResize();
         }
-
+        private void FrmMain_Resize(object sender, EventArgs e)
+        {
+            if (resizingThreadExit)
+                FrmMain_UpdateAfterResize();
+        }
         private void FrmMain_UpdateAfterResize()
         {
             if (!allowResizeUpdate)
@@ -124,8 +128,8 @@ namespace GalsPassHolder
                 newFontSize = newFontSizeW;
 
             var nf = new Font("Microsoft Sans Serif", newFontSize);
-            GalFormFunctions.RecursiveSetProperty<Font>(this, "Font", nf, new List<Type>() { btnKeyAdd.GetType(), cmbVersionSelect.GetType(), menuStripMain.GetType(), menuItemOptionsToolStrip.GetType(), menuItemNew.GetType()} );
-            var nf2 = new Font(nf.Name, Convert.ToSingle(newFontSize * 1.25));
+            GalFormFunctions.RecursiveSetProperty<Font>(this, "Font", nf, new List<Type>() { btnKeyAdd.GetType(), cmbVersionSelect.GetType(), menuStripMain.GetType(), menuItemOptionsToolStrip.GetType(), menuItemNew.GetType() });
+            var nf2 = new Font(nf.Name, Convert.ToSingle(newFontSize * 1.1));
             GalFormFunctions.RecursiveSetProperty<Font>(this, "Font", nf2, new List<Type>() { lblClipBoard.GetType(), txtNoteData.GetType() });
 
             FrmMain_RecursiveFontSizeSetter(this, newFontSize);
@@ -512,7 +516,7 @@ namespace GalsPassHolder
                     catch (System.Security.Cryptography.CryptographicException)
                     {
                         failed = true;
-                        MessageBox.Show(this, "Password for " + fileName + " incorrect (most likely) or " + fileName + " has been corrupted (unlikely).", "Error opening file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(this, "Password for " + fileName + " incorrect", "Error opening file", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     if (!failed)
@@ -688,7 +692,8 @@ namespace GalsPassHolder
         }
         private void DataGridViewNotes_Leave(object sender, EventArgs e)
         {
-            dataGridViewNotes.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //dataGridViewNotes.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            dataGridViewNotes.EndEdit();
             DataGridViewKeys_update();
         }
         private void DataGridViewNotes_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
@@ -883,7 +888,12 @@ namespace GalsPassHolder
             {
                 e.Handled = true;
                 e.SuppressKeyPress = true;
-                BeginInvoke(new Action(() => txtNoteData.Focus()));
+                BeginInvoke(new Action(() =>
+                {
+                    dataGridViewKeys.CommitEdit(DataGridViewDataErrorContexts.CurrentCellChange);
+                    dataGridViewKeys.EndEdit();
+                    txtNoteData.Focus();
+                }));
             }
         }
         private void NoteKey_DtKeysForNote_rowChanged(object sender, DataRowChangeEventArgs e)
@@ -1011,8 +1021,8 @@ namespace GalsPassHolder
                 else
                 {
                     var currentRow = this.dataGridViewKeys.CurrentRow;
-                    //if current row is empty, try to find last focused row
-                    if (currentRow is null || Convert.IsDBNull(currentRow.Cells[2].Value)) //would prefer using column names, but that throws an error
+                //if current row is empty, try to find last focused row
+                if (currentRow is null || Convert.IsDBNull(currentRow.Cells[2].Value)) //would prefer using column names, but that throws an error
                         if ((dataGridViewKeys_lastRowFocusedIndex >= 0) && (dataGridViewKeys_lastRowFocusedIndex < dataGridViewKeys.Rows.Count))
                             currentRow = dataGridViewKeys.Rows[dataGridViewKeys_lastRowFocusedIndex];
 
@@ -1097,7 +1107,7 @@ namespace GalsPassHolder
             {
                 cmbVersionError = (cmbVersionSelect.Items.Count <= 1 || cmbVersionSelect.SelectedIndex == 0 || cmbVersionSelect.SelectedItem == null);
                 if (cmbVersionError)
-                { 
+                {
                     txtNoteData.Text = "";
                     NoteData_cmbVersionSelect_ignoreEvents = false;
                 }
@@ -1165,7 +1175,10 @@ namespace GalsPassHolder
             if (alwaysSave || (!string.IsNullOrWhiteSpace(txtNoteData.Text) && tblLyoNoteData.Enabled))
             {
                 if (dataGridViewKeys_dtNoteKeys_id < 0)
-                    throw new Exception("This error should not occur, note item id < 0");
+                {
+                    MessageBox.Show(this, "Note data failed to save, manually save!", "Save error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 var dr = dsGalData.dtNoteKeyValues.NewRow();
                 dr["noteKey_id"] = dataGridViewKeys_dtNoteKeys_id;
@@ -1295,11 +1308,6 @@ namespace GalsPassHolder
         private void NoteData_Clipboard_btnClearClipboard_Click(object sender, EventArgs e)
         {
             Clipboard.Clear();
-        }
-
-        private void throwExceptionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            throw new Exception("testing");
         }
     }
 }
