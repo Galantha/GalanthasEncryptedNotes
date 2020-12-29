@@ -126,7 +126,8 @@ namespace GalsPassHolder
                 if (ex.InnerException != null && depth <= 5)
                     text.Append(nl + "--------------------------------------" + nl + nl + ConvertExceptionToTextRecursive(ex, depth+1));
                 else
-                    text.Append(nl + "exceeded depth limit");
+                    if (ex.InnerException == null )
+                        text.Append(nl + "exceeded depth limit");
             }
             catch (Exception ex2)
             {

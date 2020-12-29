@@ -257,7 +257,7 @@ namespace GalsPassHolder
 
                 string[] paramArray = { strDataSet, file, key, version };
 
-                if (noAsync || true)
+                if (noAsync)
                     EncryptDataSetToFileAsyncHelper(paramArray);
                 else
                 {

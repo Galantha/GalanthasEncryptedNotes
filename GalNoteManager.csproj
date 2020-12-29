@@ -23,12 +23,14 @@
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
+    <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://localhost/GalsPassHolder/</UpdateUrl>
     <SupportUrl>mailto:gal_0xff%40outlook.com</SupportUrl>
     <ProductName>Galantha%27s Encrypted Notes</ProductName>
     <PublisherName>Layla</PublisherName>
-    <ApplicationRevision>73</ApplicationRevision>
+    <MinimumRequiredVersion>1.0.0.74</MinimumRequiredVersion>
+    <ApplicationRevision>79</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -183,4 +185,8 @@
     <Content Include="favicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>
