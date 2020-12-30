@@ -30,7 +30,7 @@
     <ProductName>Galantha%27s Encrypted Notes</ProductName>
     <PublisherName>Layla</PublisherName>
     <MinimumRequiredVersion>1.0.0.74</MinimumRequiredVersion>
-    <ApplicationRevision>79</ApplicationRevision>
+    <ApplicationRevision>84</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -152,7 +152,6 @@
       <DependentUpon>DsGalNoteManager.xsd</DependentUpon>
     </None>
     <None Include="GalanthasKeyFile.pfx" />
-    <None Include="GalNoteManager_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\dsGalNoteManager.dtNoteKeysDataTable.datasource" />
     <None Include="Properties\DataSources\dsGalNoteManager.dtNotesRow.datasource" />

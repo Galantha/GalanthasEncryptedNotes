@@ -52,8 +52,8 @@
             this.btnDeleteVersion = new System.Windows.Forms.Button();
             this.cmbVersionSelect = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnPasteTo = new System.Windows.Forms.Button();
-            this.btnCopyFrom = new System.Windows.Forms.Button();
+            this.btnCopyTo = new System.Windows.Forms.Button();
+            this.btnPasteFrom = new System.Windows.Forms.Button();
             this.lblClipBoard = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSaveNoteData = new System.Windows.Forms.Button();
@@ -110,7 +110,7 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Text = "&File";
             // 
             // menuItemNew
             // 
@@ -123,7 +123,7 @@
             // menuItemOpen
             // 
             this.menuItemOpen.Name = "menuItemOpen";
-            this.menuItemOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.menuItemOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.menuItemOpen.Size = new System.Drawing.Size(183, 22);
             this.menuItemOpen.Text = "&Open";
             this.menuItemOpen.Click += new System.EventHandler(this.Menu_OpenToolStripMenuItem_Click);
@@ -261,8 +261,8 @@
             this.tblLyoNoteData.Controls.Add(this.btnDeleteVersion, 4, 0);
             this.tblLyoNoteData.Controls.Add(this.cmbVersionSelect, 2, 0);
             this.tblLyoNoteData.Controls.Add(this.label1, 0, 0);
-            this.tblLyoNoteData.Controls.Add(this.btnPasteTo, 0, 6);
-            this.tblLyoNoteData.Controls.Add(this.btnCopyFrom, 0, 7);
+            this.tblLyoNoteData.Controls.Add(this.btnCopyTo, 0, 6);
+            this.tblLyoNoteData.Controls.Add(this.btnPasteFrom, 0, 7);
             this.tblLyoNoteData.Controls.Add(this.lblClipBoard, 1, 6);
             this.tblLyoNoteData.Controls.Add(this.label2, 1, 5);
             this.tblLyoNoteData.Controls.Add(this.btnSaveNoteData, 0, 4);
@@ -333,30 +333,30 @@
             this.label1.Text = "version:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnPasteTo
+            // btnCopyTo
             // 
-            this.btnPasteTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPasteTo.Location = new System.Drawing.Point(0, 236);
-            this.btnPasteTo.Margin = new System.Windows.Forms.Padding(0);
-            this.btnPasteTo.Name = "btnPasteTo";
-            this.btnPasteTo.Size = new System.Drawing.Size(57, 37);
-            this.btnPasteTo.TabIndex = 4;
-            this.btnPasteTo.Text = "&Paste To:";
-            this.btnPasteTo.UseVisualStyleBackColor = true;
-            this.btnPasteTo.Click += new System.EventHandler(this.NoteData_Clipboard_BtnPasteTo_Click);
+            this.btnCopyTo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCopyTo.Location = new System.Drawing.Point(0, 236);
+            this.btnCopyTo.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCopyTo.Name = "btnCopyTo";
+            this.btnCopyTo.Size = new System.Drawing.Size(57, 37);
+            this.btnCopyTo.TabIndex = 4;
+            this.btnCopyTo.Text = "&Copy To:";
+            this.btnCopyTo.UseVisualStyleBackColor = true;
+            this.btnCopyTo.Click += new System.EventHandler(this.NoteData_Clipboard_BtnPasteTo_Click);
             // 
-            // btnCopyFrom
+            // btnPasteFrom
             // 
-            this.btnCopyFrom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCopyFrom.Location = new System.Drawing.Point(0, 273);
-            this.btnCopyFrom.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCopyFrom.Name = "btnCopyFrom";
-            this.btnCopyFrom.Size = new System.Drawing.Size(57, 42);
-            this.btnCopyFrom.TabIndex = 5;
-            this.btnCopyFrom.TabStop = false;
-            this.btnCopyFrom.Text = "Copy From:";
-            this.btnCopyFrom.UseVisualStyleBackColor = true;
-            this.btnCopyFrom.Click += new System.EventHandler(this.NoteData_Clipboard_BtnCopyFrom_Click);
+            this.btnPasteFrom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPasteFrom.Location = new System.Drawing.Point(0, 273);
+            this.btnPasteFrom.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPasteFrom.Name = "btnPasteFrom";
+            this.btnPasteFrom.Size = new System.Drawing.Size(57, 42);
+            this.btnPasteFrom.TabIndex = 5;
+            this.btnPasteFrom.TabStop = false;
+            this.btnPasteFrom.Text = "&Paste From:";
+            this.btnPasteFrom.UseVisualStyleBackColor = true;
+            this.btnPasteFrom.Click += new System.EventHandler(this.NoteData_Clipboard_BtnCopyFrom_Click);
             // 
             // lblClipBoard
             // 
@@ -481,6 +481,8 @@
             // 
             this.dataGridViewKeys.AllowUserToResizeColumns = false;
             this.dataGridViewKeys.AllowUserToResizeRows = false;
+            this.dataGridViewKeys.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridViewKeys.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewKeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -495,9 +497,10 @@
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 1, 0, 1);
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewKeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewKeys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewKeys.Enabled = false;
@@ -507,8 +510,8 @@
             this.dataGridViewKeys.Size = new System.Drawing.Size(140, 277);
             this.dataGridViewKeys.TabIndex = 2;
             this.dataGridViewKeys.Visible = false;
-            this.dataGridViewKeys.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridViewKeys_CellBeginEdit);
-            this.dataGridViewKeys.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewKeys_CellEndEdit);
+            this.dataGridViewKeys.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DataGridViewKeys_CellBeginEdit);
+            this.dataGridViewKeys.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewKeys_CellEndEdit);
             this.dataGridViewKeys.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridViewKeys_DataBindingComplete);
             this.dataGridViewKeys.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewKeys_RowLeave);
             this.dataGridViewKeys.SelectionChanged += new System.EventHandler(this.DataGridViewKeys_SelectionChanged);
@@ -517,7 +520,6 @@
             this.dataGridViewKeys.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.DataGridViewKeys_UserDeletingRow);
             this.dataGridViewKeys.EnabledChanged += new System.EventHandler(this.DataGridViewKeys_EnabledChanged);
             this.dataGridViewKeys.VisibleChanged += new System.EventHandler(this.FrmMain_child_VisibleChanged);
-            this.dataGridViewKeys.Leave += new System.EventHandler(this.DataGridViewKeys_Leave);
             // 
             // tableLayoutPanel1
             // 
@@ -580,6 +582,8 @@
             // 
             this.dataGridViewNotes.AllowUserToResizeColumns = false;
             this.dataGridViewNotes.AllowUserToResizeRows = false;
+            this.dataGridViewNotes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridViewNotes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewNotes.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -594,9 +598,10 @@
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(0, 1, 0, 1);
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewNotes.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewNotes.Enabled = false;
@@ -610,13 +615,13 @@
             this.dataGridViewNotes.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DataGridViewNotes_CellBeginEdit);
             this.dataGridViewNotes.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewNotes_CellEndEdit);
             this.dataGridViewNotes.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewNotes_RowLeave);
+            this.dataGridViewNotes.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridViewNotes_RowPrePaint);
             this.dataGridViewNotes.SelectionChanged += new System.EventHandler(this.DataGridViewNotes_SelectionChanged);
             this.dataGridViewNotes.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.DataGridViewNotes_UserAddedRow);
             this.dataGridViewNotes.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.DataGridViewNotes_UserDeletedRow);
             this.dataGridViewNotes.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.DataGridViewNotes_UserDeletingRow);
             this.dataGridViewNotes.EnabledChanged += new System.EventHandler(this.FrmMain_child_VisibleChanged);
             this.dataGridViewNotes.VisibleChanged += new System.EventHandler(this.FrmMain_child_VisibleChanged);
-            this.dataGridViewNotes.Leave += new System.EventHandler(this.DataGridViewNotes_Leave);
             // 
             // statusStrip
             // 
@@ -726,8 +731,8 @@
         private System.Windows.Forms.Button btnSaveNoteData;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnDeleteVersion;
-        private System.Windows.Forms.Button btnPasteTo;
-        private System.Windows.Forms.Button btnCopyFrom;
+        private System.Windows.Forms.Button btnCopyTo;
+        private System.Windows.Forms.Button btnPasteFrom;
         private System.Windows.Forms.Label lblClipBoard;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtNoteData;

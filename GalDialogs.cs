@@ -168,7 +168,7 @@ namespace GalsPassHolder
                 RecursiveSetProperty<T>(childControl, property, propertyValue, includeOnlyTypes, excludeTypes, excludeControls);
 
             Type type = ctr.GetType();
-            if ((includeOnlyTypes == null || includeOnlyTypes.Contains(type)) && (excludeTypes == null || !excludeTypes.Contains(type)) && (excludeControls == null  || !excludeControls.Contains(ctr)))
+            if ((includeOnlyTypes == null || includeOnlyTypes.Contains(type)) && (excludeTypes == null || !excludeTypes.Contains(type)) && (excludeControls == null || !excludeControls.Contains(ctr)))
                 SetPropertyIfExists<T>(ctr, property, propertyValue);
         }
         public static void SetPropertyIfExists<T>(Control ctr, String property, T propertyValue)
@@ -275,6 +275,50 @@ namespace GalsPassHolder
                     return defaultValue;
                 }
             }
+        }
+
+        public static bool CheckForValidDataGridViewRow(DataGridViewRow row, bool verifyStringColsNotEmpty = true)
+        {
+            if (row is null)
+                return false;
+
+            foreach (DataGridViewCell cell in row.Cells)
+                if (!VerifyDataGridViewRowCell(cell))
+                    return false;
+
+            try
+            {
+                if (row.DataBoundItem is null)
+                    return false;
+            }
+            catch (System.IndexOutOfRangeException) //not a fan of this :\, but I need to do the null check
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool VerifyDataGridViewRowCell(DataGridViewCell cell, bool verifyStringNotEmpty = true)
+        {
+            if (cell is null || cell.Value == null || Convert.IsDBNull(cell.Value))
+                return false;
+            else if (verifyStringNotEmpty)
+            {
+                var typeName = cell.Value.GetType().Name.Trim().ToLower();
+                switch (typeName)
+                {
+                    case "string":
+                        if (string.IsNullOrWhiteSpace((string)cell.Value))
+                            return false;
+                        break;
+                    default:
+                        //no nothing
+                        break;
+                }
+            }
+
+            return true;
         }
 
     }
