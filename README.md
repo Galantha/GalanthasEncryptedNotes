@@ -15,11 +15,8 @@ The whole password database is then saved to the disk using a differant secret k
 
 
 You can see how this is done for the note items in the frmMain.cs function NoteKey_DtKeysForNote_rowChanged.
-
 For the Note Data items frmMain.cs function NoteData_SaveNoteData.
-
 For the entire file, the GalLib.cs function EncryptDataSetToFile, and EncryptDataSetToFileAsyncHelper.
-
 
 
 The function used to merge the hashes is microsofts managed sha512.  The encryption decryption is microsofts managed Rijndael 256.  I went with Rijndael over AES for the 256 bit block sizes.
