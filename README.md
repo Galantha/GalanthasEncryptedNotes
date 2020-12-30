@@ -19,7 +19,7 @@ For the Note Data items frmMain.cs function NoteData_SaveNoteData.
 For the entire file, the GalLib.cs function EncryptDataSetToFile, and EncryptDataSetToFileAsyncHelper.
 
 
-The function used to merge the hashes is microsofts managed sha512.  The encryption decryption is microsofts managed Rijndael 256.  I went with Rijndael over AES for the 256 bit block sizes.
+The function used to merge the hashes is microsofts managed sha512.  The encryption decryption is microsofts managed Rijndael 256.  I went with Rijndael over AES for the 256 bit block sizes.  The sha512 keys are hashed against themselves many times to help protect the orginal password entered.
 
 The rest of the program uses autosizing winforms that should scale nicely to any screen size.  Parts of the UI are multithreaded because the key generation/decryption is to performance expensive to be done in the primary thread.  
 
