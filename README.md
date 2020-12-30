@@ -3,6 +3,7 @@ project I made for myself as an encrypted note / password manager.  No warranty!
 
 Best way to install:
 [https://galantha.net/appPublishGalanthasEncryptedNotes/publish.htm](https://galantha.net/appPublishGalanthasEncryptedNotes/publish.htm)
+
 If you wish to compile and build yourself, it was built using Visual Studio 2019 C# Winforms.
 
 I made this project as secure as I was able to do.
