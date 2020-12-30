@@ -224,7 +224,7 @@ namespace GalsPassHolder
                         if (direction == Direction.save)
                             SaveToDT(dt, myPrefix, chk.Checked.ToString(inv), dbFieldName, dbFieldValue);
                         else
-                            chk.Checked = Convert.ToBoolean(GetFromDT(dt, prefix, chk.Checked.ToString(inv), dbFieldName, dbFieldValue), inv);
+                            chk.Checked = Convert.ToBoolean(GetFromDT(dt, myPrefix, chk.Checked.ToString(inv), dbFieldName, dbFieldValue), inv);
                         break;
                     default:
                         throw new Exception("unhandled type" + typeName);

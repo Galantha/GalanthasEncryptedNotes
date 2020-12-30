@@ -69,6 +69,10 @@
             this.btnNoteEdit = new System.Windows.Forms.Button();
             this.btnNoteAdd = new System.Windows.Forms.Button();
             this.dataGridViewNotes = new System.Windows.Forms.DataGridView();
+            this.tblLyoNotesFilter = new System.Windows.Forms.TableLayoutPanel();
+            this.lblFilterDesc = new System.Windows.Forms.Label();
+            this.btnResetNotes = new System.Windows.Forms.Button();
+            this.txtFilterNotes = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tblLayoutTopMenu = new System.Windows.Forms.TableLayoutPanel();
@@ -81,6 +85,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKeys)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).BeginInit();
+            this.tblLyoNotesFilter.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.tblLayoutTopMenu.SuspendLayout();
             this.SuspendLayout();
@@ -179,17 +184,20 @@
             this.tblLyoMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tblLyoMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tblLyoMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblLyoMain.Controls.Add(this.tableLayoutPanel2, 1, 1);
+            this.tblLyoMain.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.tblLyoMain.Controls.Add(this.tblLyoNoteData, 2, 0);
             this.tblLyoMain.Controls.Add(this.dataGridViewKeys, 1, 0);
-            this.tblLyoMain.Controls.Add(this.tableLayoutPanel1, 0, 1);
-            this.tblLyoMain.Controls.Add(this.dataGridViewNotes, 0, 0);
+            this.tblLyoMain.Controls.Add(this.tableLayoutPanel1, 0, 2);
+            this.tblLyoMain.Controls.Add(this.dataGridViewNotes, 0, 1);
+            this.tblLyoMain.Controls.Add(this.tblLyoNotesFilter, 0, 0);
             this.tblLyoMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblLyoMain.Location = new System.Drawing.Point(0, 24);
+            this.tblLyoMain.Margin = new System.Windows.Forms.Padding(0);
             this.tblLyoMain.Name = "tblLyoMain";
-            this.tblLyoMain.RowCount = 2;
-            this.tblLyoMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tblLyoMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tblLyoMain.RowCount = 3;
+            this.tblLyoMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.5F));
+            this.tblLyoMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87F));
+            this.tblLyoMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.5F));
             this.tblLyoMain.Size = new System.Drawing.Size(584, 315);
             this.tblLyoMain.TabIndex = 100;
             // 
@@ -203,12 +211,12 @@
             this.tableLayoutPanel2.Controls.Add(this.btnKeyEdit, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnKeyAdd, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(146, 283);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(146, 294);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(146, 32);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(146, 21);
             this.tableLayoutPanel2.TabIndex = 102;
             // 
             // btnKeyDelete
@@ -217,7 +225,7 @@
             this.btnKeyDelete.Location = new System.Drawing.Point(96, 0);
             this.btnKeyDelete.Margin = new System.Windows.Forms.Padding(0);
             this.btnKeyDelete.Name = "btnKeyDelete";
-            this.btnKeyDelete.Size = new System.Drawing.Size(50, 32);
+            this.btnKeyDelete.Size = new System.Drawing.Size(50, 21);
             this.btnKeyDelete.TabIndex = 2;
             this.btnKeyDelete.TabStop = false;
             this.btnKeyDelete.Text = "Delete";
@@ -230,7 +238,7 @@
             this.btnKeyEdit.Location = new System.Drawing.Point(48, 0);
             this.btnKeyEdit.Margin = new System.Windows.Forms.Padding(0);
             this.btnKeyEdit.Name = "btnKeyEdit";
-            this.btnKeyEdit.Size = new System.Drawing.Size(48, 32);
+            this.btnKeyEdit.Size = new System.Drawing.Size(48, 21);
             this.btnKeyEdit.TabIndex = 1;
             this.btnKeyEdit.TabStop = false;
             this.btnKeyEdit.Text = "Edit";
@@ -243,7 +251,7 @@
             this.btnKeyAdd.Location = new System.Drawing.Point(0, 0);
             this.btnKeyAdd.Margin = new System.Windows.Forms.Padding(0);
             this.btnKeyAdd.Name = "btnKeyAdd";
-            this.btnKeyAdd.Size = new System.Drawing.Size(48, 32);
+            this.btnKeyAdd.Size = new System.Drawing.Size(48, 21);
             this.btnKeyAdd.TabIndex = 0;
             this.btnKeyAdd.TabStop = false;
             this.btnKeyAdd.Text = "A&dd";
@@ -276,7 +284,7 @@
             this.tblLyoNoteData.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.tblLyoNoteData.Name = "tblLyoNoteData";
             this.tblLyoNoteData.RowCount = 8;
-            this.tblLyoMain.SetRowSpan(this.tblLyoNoteData, 2);
+            this.tblLyoMain.SetRowSpan(this.tblLyoNoteData, 3);
             this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6F));
             this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1F));
             this.tblLyoNoteData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23F));
@@ -507,7 +515,8 @@
             this.dataGridViewKeys.Location = new System.Drawing.Point(149, 3);
             this.dataGridViewKeys.MultiSelect = false;
             this.dataGridViewKeys.Name = "dataGridViewKeys";
-            this.dataGridViewKeys.Size = new System.Drawing.Size(140, 277);
+            this.tblLyoMain.SetRowSpan(this.dataGridViewKeys, 2);
+            this.dataGridViewKeys.Size = new System.Drawing.Size(140, 288);
             this.dataGridViewKeys.TabIndex = 2;
             this.dataGridViewKeys.Visible = false;
             this.dataGridViewKeys.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DataGridViewKeys_CellBeginEdit);
@@ -531,12 +540,12 @@
             this.tableLayoutPanel1.Controls.Add(this.btnNoteEdit, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnNoteAdd, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 283);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 294);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(146, 32);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(146, 21);
             this.tableLayoutPanel1.TabIndex = 101;
             // 
             // btnNoteDelete
@@ -545,7 +554,7 @@
             this.btnNoteDelete.Location = new System.Drawing.Point(96, 0);
             this.btnNoteDelete.Margin = new System.Windows.Forms.Padding(0);
             this.btnNoteDelete.Name = "btnNoteDelete";
-            this.btnNoteDelete.Size = new System.Drawing.Size(50, 32);
+            this.btnNoteDelete.Size = new System.Drawing.Size(50, 21);
             this.btnNoteDelete.TabIndex = 2;
             this.btnNoteDelete.TabStop = false;
             this.btnNoteDelete.Text = "Delete";
@@ -558,7 +567,7 @@
             this.btnNoteEdit.Location = new System.Drawing.Point(48, 0);
             this.btnNoteEdit.Margin = new System.Windows.Forms.Padding(0);
             this.btnNoteEdit.Name = "btnNoteEdit";
-            this.btnNoteEdit.Size = new System.Drawing.Size(48, 32);
+            this.btnNoteEdit.Size = new System.Drawing.Size(48, 21);
             this.btnNoteEdit.TabIndex = 1;
             this.btnNoteEdit.TabStop = false;
             this.btnNoteEdit.Text = "Edit";
@@ -571,7 +580,7 @@
             this.btnNoteAdd.Location = new System.Drawing.Point(0, 0);
             this.btnNoteAdd.Margin = new System.Windows.Forms.Padding(0);
             this.btnNoteAdd.Name = "btnNoteAdd";
-            this.btnNoteAdd.Size = new System.Drawing.Size(48, 32);
+            this.btnNoteAdd.Size = new System.Drawing.Size(48, 21);
             this.btnNoteAdd.TabIndex = 0;
             this.btnNoteAdd.TabStop = false;
             this.btnNoteAdd.Text = "&Add";
@@ -605,23 +614,75 @@
             this.dataGridViewNotes.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewNotes.Enabled = false;
-            this.dataGridViewNotes.Location = new System.Drawing.Point(3, 3);
+            this.dataGridViewNotes.Location = new System.Drawing.Point(3, 23);
             this.dataGridViewNotes.MultiSelect = false;
             this.dataGridViewNotes.Name = "dataGridViewNotes";
             this.dataGridViewNotes.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            this.dataGridViewNotes.Size = new System.Drawing.Size(140, 277);
+            this.dataGridViewNotes.Size = new System.Drawing.Size(140, 268);
             this.dataGridViewNotes.TabIndex = 1;
             this.dataGridViewNotes.Visible = false;
             this.dataGridViewNotes.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DataGridViewNotes_CellBeginEdit);
             this.dataGridViewNotes.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewNotes_CellEndEdit);
+            this.dataGridViewNotes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGridViewNotes_DataError);
             this.dataGridViewNotes.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewNotes_RowLeave);
-            this.dataGridViewNotes.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridViewNotes_RowPrePaint);
             this.dataGridViewNotes.SelectionChanged += new System.EventHandler(this.DataGridViewNotes_SelectionChanged);
             this.dataGridViewNotes.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.DataGridViewNotes_UserAddedRow);
             this.dataGridViewNotes.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.DataGridViewNotes_UserDeletedRow);
             this.dataGridViewNotes.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.DataGridViewNotes_UserDeletingRow);
             this.dataGridViewNotes.EnabledChanged += new System.EventHandler(this.FrmMain_child_VisibleChanged);
             this.dataGridViewNotes.VisibleChanged += new System.EventHandler(this.FrmMain_child_VisibleChanged);
+            // 
+            // tblLyoNotesFilter
+            // 
+            this.tblLyoNotesFilter.ColumnCount = 3;
+            this.tblLyoNotesFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tblLyoNotesFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64F));
+            this.tblLyoNotesFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36F));
+            this.tblLyoNotesFilter.Controls.Add(this.lblFilterDesc, 0, 0);
+            this.tblLyoNotesFilter.Controls.Add(this.btnResetNotes, 2, 0);
+            this.tblLyoNotesFilter.Controls.Add(this.txtFilterNotes, 1, 0);
+            this.tblLyoNotesFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblLyoNotesFilter.Location = new System.Drawing.Point(0, 0);
+            this.tblLyoNotesFilter.Margin = new System.Windows.Forms.Padding(0);
+            this.tblLyoNotesFilter.Name = "tblLyoNotesFilter";
+            this.tblLyoNotesFilter.RowCount = 1;
+            this.tblLyoNotesFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblLyoNotesFilter.Size = new System.Drawing.Size(146, 20);
+            this.tblLyoNotesFilter.TabIndex = 103;
+            // 
+            // lblFilterDesc
+            // 
+            this.lblFilterDesc.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblFilterDesc.AutoSize = true;
+            this.lblFilterDesc.Location = new System.Drawing.Point(0, 3);
+            this.lblFilterDesc.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFilterDesc.Name = "lblFilterDesc";
+            this.lblFilterDesc.Size = new System.Drawing.Size(29, 13);
+            this.lblFilterDesc.TabIndex = 0;
+            this.lblFilterDesc.Text = "Filter";
+            // 
+            // btnResetNotes
+            // 
+            this.btnResetNotes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnResetNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnResetNotes.Location = new System.Drawing.Point(103, 0);
+            this.btnResetNotes.Margin = new System.Windows.Forms.Padding(0);
+            this.btnResetNotes.Name = "btnResetNotes";
+            this.btnResetNotes.Size = new System.Drawing.Size(43, 20);
+            this.btnResetNotes.TabIndex = 1;
+            this.btnResetNotes.Text = "Reset";
+            this.btnResetNotes.UseVisualStyleBackColor = true;
+            this.btnResetNotes.Click += new System.EventHandler(this.Notes_btnResetNotes_Click);
+            // 
+            // txtFilterNotes
+            // 
+            this.txtFilterNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFilterNotes.Location = new System.Drawing.Point(29, 2);
+            this.txtFilterNotes.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.txtFilterNotes.Name = "txtFilterNotes";
+            this.txtFilterNotes.Size = new System.Drawing.Size(74, 20);
+            this.txtFilterNotes.TabIndex = 2;
+            this.txtFilterNotes.TextChanged += new System.EventHandler(this.Notes_txtFilterNotes_TextChanged);
             // 
             // statusStrip
             // 
@@ -705,6 +766,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKeys)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).EndInit();
+            this.tblLyoNotesFilter.ResumeLayout(false);
+            this.tblLyoNotesFilter.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.tblLayoutTopMenu.ResumeLayout(false);
@@ -756,6 +819,10 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblNoteData;
+        private System.Windows.Forms.TableLayoutPanel tblLyoNotesFilter;
+        private System.Windows.Forms.Label lblFilterDesc;
+        private System.Windows.Forms.Button btnResetNotes;
+        private System.Windows.Forms.TextBox txtFilterNotes;
     }
 }
 

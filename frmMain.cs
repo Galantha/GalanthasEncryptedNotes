@@ -214,86 +214,82 @@ namespace GalsPassHolder
         }
         private void FrmMain_setEnableAndVisible()
         {
+            menuItemNew.Enabled = true;
+            menuItemOpen.Enabled = true;
+            menuItemExit.Enabled = true;
+
             var openFileMsg = "Hint: click File then New or File then Open.";
-            if (string.IsNullOrWhiteSpace(mainHashKey))
+            bool haveMainHash;
+            if (!string.IsNullOrWhiteSpace(mainHashKey))
             {
-                menuItemNew.Enabled = true;
-                menuItemOpen.Enabled = true;
-                menuItemSave.Enabled = false;
-                menuItemSaveAs.Enabled = false;
-                menuItemSaveExit.Enabled = false;
-                menuItemExit.Enabled = true;
-                dataGridViewNotes.Visible = false;
-                lblStatus.Text = openFileMsg;
-                menuItemChangeMainPassword.Enabled = false;
-                menuItemOptionsToolStrip.Enabled = false;
+
+                haveMainHash = true;
+                if (lblStatus.Text == openFileMsg)
+                    lblStatus.Text = "Enter a note, and then enter a note item, and then enter data for that note item.";
             }
             else
             {
-                const bool t = true;
-                menuItemSave.Enabled = t;
-                menuItemSaveAs.Enabled = t;
-                menuItemSaveExit.Enabled = t;
-                if (lblStatus.Text == openFileMsg)
-                    lblStatus.Text = "Enter a note, and then enter a note item, and then enter data for that note item.";
-                menuItemChangeMainPassword.Enabled = true;
-                menuItemOptionsToolStrip.Enabled = true;
+                haveMainHash = false;
+                lblStatus.Text = openFileMsg;
             }
+            menuItemSave.Enabled = haveMainHash;
+            menuItemSaveAs.Enabled = haveMainHash;
+            menuItemSaveExit.Enabled = haveMainHash;
+            menuItemChangeMainPassword.Enabled = haveMainHash;
+            menuItemOptionsToolStrip.Enabled = haveMainHash;
+            dataGridViewNotes.Visible = haveMainHash;
 
+            bool displayedDataGridViewNotes;
             if (dataGridViewNotes.Visible && dataGridViewNotes.Enabled)
             {
-                const bool t = true;
-                btnNoteAdd.Visible = t;
-                btnNoteEdit.Visible = t;
-                btnNoteDelete.Visible = t;
-
+                displayedDataGridViewNotes = true;
                 if (dataGridViewNotes.CurrentRow != null)
                 {
-                    btnNoteEdit.Enabled = t;
-                    btnNoteDelete.Enabled = t;
+                    btnNoteEdit.Enabled = true;
+                    btnNoteDelete.Enabled = true;
                 }
                 else
                 {
                     btnNoteEdit.Enabled = false;
                     btnNoteDelete.Enabled = false;
+                    dataGridViewKeys.Visible = false;
                 }
             }
             else
             {
-                const bool f = false;
-                btnNoteAdd.Visible = f;
-                btnNoteEdit.Visible = f;
-                btnNoteDelete.Visible = f;
-                dataGridViewKeys.Visible = f;
+                displayedDataGridViewNotes = false;
             }
+            btnNoteAdd.Visible = displayedDataGridViewNotes;
+            btnNoteEdit.Visible = displayedDataGridViewNotes;
+            btnNoteDelete.Visible = displayedDataGridViewNotes;
+            btnResetNotes.Visible = displayedDataGridViewNotes;
+            txtFilterNotes.Visible = displayedDataGridViewNotes;
+            lblFilterDesc.Visible = displayedDataGridViewNotes;
 
+            bool dgvk;
             if (dataGridViewKeys.Visible && dataGridViewKeys.Enabled)
             {
-                const bool t = true;
-                btnKeyAdd.Visible = t;
-                btnKeyEdit.Visible = t;
-                btnKeyDelete.Visible = t;
-
+                dgvk = true;
                 if (dataGridViewKeys.CurrentRow != null)
                 {
-                    btnKeyDelete.Enabled = t;
-                    btnKeyEdit.Enabled = t;
+                    btnKeyDelete.Enabled = true;
+                    btnKeyEdit.Enabled = true;
                 }
                 else
                 {
-                    const bool f = false;
-                    btnKeyDelete.Enabled = f;
-                    btnKeyEdit.Enabled = f;
+                    btnKeyDelete.Enabled = false;
+                    btnKeyEdit.Enabled = false;
                 }
             }
             else
             {
-                const bool f = false;
-                btnKeyAdd.Visible = f;
-                btnKeyEdit.Visible = f;
-                btnKeyDelete.Visible = f;
-                tblLyoNoteData.Visible = f;
+                dgvk = false;
+                tblLyoNoteData.Visible = false;
             }
+
+            btnKeyAdd.Visible = dgvk;
+            btnKeyEdit.Visible = dgvk;
+            btnKeyDelete.Visible = dgvk;
         }
         private void FrmMain_child_VisibleChanged(object sender, EventArgs e)
         {
@@ -363,6 +359,7 @@ namespace GalsPassHolder
         private void Menu_NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             File_NewDatabase();
+            dataGridViewNotes.Focus();
         }
         private void Menu_changeMainPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -698,15 +695,9 @@ namespace GalsPassHolder
                     dtNotes_drceh = new DataRowChangeEventHandler(Notes_dtNotes_rowChanged);
                 dsGalData.dtNotes.RowChanged -= dtNotes_drceh; // It is a klug and I know it!  It is a klug and I know it!  But it works so well, and I do not know a better way, so I guess it is going to be a klug!
                 dsGalData.dtNotes.RowChanged += dtNotes_drceh;
-
                 dataGridViewNotes.DataSource = dsGalData.dtNotes;
             }
-
-            for (int i = 0; i < dataGridViewNotes.Rows.Count; i += 1)
-                dataGridViewNotes.Rows[i].HeaderCell.Value = i.ToString(inv);
-
             dataGridViewNotes.Columns[0].Visible = false;
-            //dataGridViewNotes.RowHeadersWidth = 5; //does not work?
             dataGridViewNotes.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewNotes.Columns[1].HeaderText = "Note name:";
             dataGridViewNotes.Visible = dataGridViewNotes.Enabled = true;
@@ -717,7 +708,6 @@ namespace GalsPassHolder
             allowResizeUpdate = true;
             FrmMain_UpdateAfterResize();
         }
-
 
         private void DataGridViewNotes_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
@@ -752,6 +742,20 @@ namespace GalsPassHolder
         {
             dataGridViewNotes.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;//shift key bug solution
         }
+        private void DataGridViewNotes_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
+
+            string context = e.Context.ToString();
+            switch (e.Exception.GetType().FullName)
+            {
+                case "System.Data.NoNullAllowedException":
+                    break;
+                default:
+                    Program.DealWithException(e.Exception);
+                    break;
+            }
+        }
         private void Notes_btnNoteAdd_Click(object sender, EventArgs e)
         {
             var dg = dataGridViewNotes;
@@ -773,7 +777,7 @@ namespace GalsPassHolder
         {
             var dg = dataGridViewNotes;
             dg.Focus();
-            if (dg.CurrentRow != null)
+            if (GalFormFunctions.CheckForValidDataGridViewRow(dg.CurrentRow))
             {
                 if (MessageBox.Show(this, "Delete " + (string)dg.CurrentRow.Cells[1].Value + "?", "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                     dg.Rows.Remove(dg.CurrentRow);
@@ -789,11 +793,37 @@ namespace GalsPassHolder
             }
 
         }
-        private void dataGridViewNotes_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        private void Notes_btnResetNotes_Click(object sender, EventArgs e)
         {
-            dataGridViewNotes.RowHeadersWidth = 5;
+            txtFilterNotes.Text = "";
+            dataGridViewNotes.Sort(dataGridViewNotes.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
         }
+        private void Notes_txtFilterNotes_TextChanged(object sender, EventArgs e)
+        {
+            var filter = txtFilterNotes.Text.ToLower();
+            bool showAll = string.IsNullOrWhiteSpace(filter);
+            foreach (DataGridViewRow dgvr in dataGridViewNotes.Rows)
+                if (GalFormFunctions.CheckForValidDataGridViewRow(dgvr))
+                    if (showAll || ((string)dgvr.Cells[1].Value).ToLower().Contains(filter))
+                    {
+                        if (!dgvr.Visible)
+                            dgvr.Visible = true;
+                    }
+                    else if (dgvr.Visible) // && !dgvr.Selected)
+                    {
+                        if (dgvr.Selected )
+                            dgvr.Selected = false;
+                        if (dataGridViewNotes.CurrentRow == dgvr)
+                        { 
+                            dataGridViewNotes.CurrentCell = null;
+                            FrmMain_setEnableAndVisible();
+                            dataGridViewKeys.Visible = false;
+                            tblLyoNoteData.Visible = false;
+                        }
+                        dgvr.Visible = false;
+                    }
 
+        }
 
         private void DataGridViewKeys_update()
         {
@@ -1180,7 +1210,7 @@ namespace GalsPassHolder
                 NoteData_cmbVersionSelect_ignoreEvents = true;
                 KeyValuePair<int, String> kv = (KeyValuePair<int, String>)cmbVersionSelect.SelectedItem;
                 int id = kv.Key;
-                
+
                 if (id < 0)
                     throw new Exception("This error should never happen! -> cmbVersionSelect key value less than 0");
 
@@ -1264,16 +1294,16 @@ namespace GalsPassHolder
             {
                 System.Threading.Thread.Sleep(100);  //if it is a hack and it works, it is not awful, right?
                 BeginInvoke(new Action(() =>
-                {
+{
 
-                    NoteData_cmbVersionSelect_ignoreEvents = true;
-                    NoteData_ignoreUpdates = true;
-                    if (cmbVersionSelect.Items.Count > 0)
-                        cmbVersionSelect.SelectedIndex = 0;
-                    txtNoteData.Text = "";
-                    NoteData_ignoreUpdates = false;
-                    NoteData_cmbVersionSelect_ignoreEvents = false;
-                }));
+    NoteData_cmbVersionSelect_ignoreEvents = true;
+    NoteData_ignoreUpdates = true;
+    if (cmbVersionSelect.Items.Count > 0)
+        cmbVersionSelect.SelectedIndex = 0;
+    txtNoteData.Text = "";
+    NoteData_ignoreUpdates = false;
+    NoteData_cmbVersionSelect_ignoreEvents = false;
+}));
             });
             t.IsBackground = true;
             t.Start(); //why you ask, why?   we are basically letting the events from leaving the txtbox go by before we clear it
@@ -1371,23 +1401,23 @@ namespace GalsPassHolder
             {
                 System.Threading.Thread.Sleep(100);  //if it is a hack and it works, it is not awful, right?
                 BeginInvoke(new Action(() =>
-       {
-           var text = Clipboard.GetText();
-           if (text != txtNoteData.Text)
-           {
-               NoteData_cmbVersionSelect_ignoreEvents = true;
-               NoteData_ignoreUpdates = true;
-               var oldText = txtNoteData.Text;
-               cmbVersionSelect.SelectedIndex = 0;
-               if (string.IsNullOrWhiteSpace(oldText))
-                   txtNoteData.Text = Clipboard.GetText();
-               else
-                   txtNoteData.Text = oldText + Environment.NewLine + Clipboard.GetText();
-               NoteData_SaveNoteData(false, false);
-               NoteData_ignoreUpdates = false;
-               NoteData_cmbVersionSelect_ignoreEvents = false;
-           }
-       }));
+{
+    var text = Clipboard.GetText();
+    if (text != txtNoteData.Text)
+    {
+        NoteData_cmbVersionSelect_ignoreEvents = true;
+        NoteData_ignoreUpdates = true;
+        var oldText = txtNoteData.Text;
+        cmbVersionSelect.SelectedIndex = 0;
+        if (string.IsNullOrWhiteSpace(oldText))
+            txtNoteData.Text = Clipboard.GetText();
+        else
+            txtNoteData.Text = oldText + Environment.NewLine + Clipboard.GetText();
+        NoteData_SaveNoteData(false, false);
+        NoteData_ignoreUpdates = false;
+        NoteData_cmbVersionSelect_ignoreEvents = false;
+    }
+}));
             });
             t.IsBackground = true;
             t.Start(); //why you ask, why?  well when this button is clicked, the leave event for txtItemData is triggered, which then triggers the save event, which is on its own thread, and then triggers the load event about 2 ms later (which overwrites what we put in here if we do not wait).  We are just giving time for all those events happen before putting in our data.
@@ -1409,5 +1439,7 @@ namespace GalsPassHolder
         {
             Clipboard.Clear();
         }
+
+
     }
 }

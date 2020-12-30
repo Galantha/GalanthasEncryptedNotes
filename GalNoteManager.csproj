@@ -15,7 +15,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>C:\Users\layla\source\repos\GalsPassHolder\publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -25,12 +25,12 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>http://localhost/GalsPassHolder/</UpdateUrl>
-    <SupportUrl>mailto:gal_0xff%40outlook.com</SupportUrl>
     <ProductName>Galantha%27s Encrypted Notes</ProductName>
     <PublisherName>Layla</PublisherName>
-    <MinimumRequiredVersion>1.0.0.74</MinimumRequiredVersion>
-    <ApplicationRevision>84</ApplicationRevision>
+    <MinimumRequiredVersion>1.0.0.92</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>93</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

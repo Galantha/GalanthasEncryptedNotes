@@ -73,7 +73,7 @@ namespace GalsPassHolder
             DealWithException((Exception)args.ExceptionObject);
         }
 
-        static void DealWithException(Exception ex)
+        public static void DealWithException(Exception ex)
         {
             if (frmGalMain != null)
                 frmGalMain.closeWithoutSaving = true; //prevent automatic saving of bad file
