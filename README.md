@@ -21,6 +21,6 @@ For the entire file, the GalLib.cs function EncryptDataSetToFile, and EncryptDat
 
 The function used to merge the hashes is microsofts managed sha512.  The encryption decryption is microsofts managed Rijndael 256.  I went with Rijndael over AES for the 256 bit block sizes.
 
-The rest of the program uses an autosizing winforms that should scale nicely to any screen size.  Parts of the UI are multithreaded because the key generation/decryption is to performance expensive to be done in the primary thread.  
+The rest of the program uses autosizing winforms that should scale nicely to any screen size.  Parts of the UI are multithreaded because the key generation/decryption is to performance expensive to be done in the primary thread.  
 
 Clipboard cut / paste is supported.
