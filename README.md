@@ -19,4 +19,4 @@ The function used to merge the hashes is microsofts managed sha512.  The encrypt
 
 The rest of the program uses an autosizing winforms that should scale nicely to any screen size.  Parts of the UI are multithreaded because the key generation/decryption is to performance expensive to be done in the primary thread.  
 
-Clipboard cut / paste is fully supported.
+Clipboard cut / paste is supported.
