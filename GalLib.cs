@@ -118,7 +118,7 @@ namespace GalsPassHolder
                     throw new ArgumentNullException(nameof(key), "key is not allowed to be empty");
 
                 byte[] ky = GetHash256(salt, key, extraHashIterations);
-                byte[] iv = TruncateByteArray(GetHash256(key, salt, (extraHashIterations + 1) / 2), 32);
+                byte[] iv = GetHash256(key, salt, (extraHashIterations + 1) / 2); 
 
                 string textToWrite = GetRandomSalt(10) + verify + plainText; //randomizing the input just a touch //verify lets us verify decryption was correct
 
@@ -170,7 +170,7 @@ namespace GalsPassHolder
                     throw new ArgumentNullException(nameof(key), "key is not allowed to be empty");
 
                 byte[] ky = GetHash256(salt, key, extraHashIterations);
-                byte[] iv = TruncateByteArray(GetHash256(key, salt, (extraHashIterations + 1) / 2), 32);
+                byte[] iv = GetHash256(key, salt, (extraHashIterations + 1) / 2);
 
 
                 byte[] encryptedBytes;
