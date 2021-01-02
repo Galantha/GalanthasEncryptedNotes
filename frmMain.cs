@@ -1171,7 +1171,7 @@ namespace GalsPassHolder
                             noteLabelString += " for item: " + key;
                         if (!string.IsNullOrWhiteSpace(note))
                             noteLabelString += ", for note: " + note;
-                        BeginInvoke(new Action(() => lblNoteData.Text = noteLabelString));
+                        lblNoteData.Text = noteLabelString;
 
                         DataRow[] dataRows = null;
                         lock (dsGalData.dtNoteKeyValues)
